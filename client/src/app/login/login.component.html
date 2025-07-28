@@ -1,0 +1,164 @@
+<div class="login-container">
+  <!-- Background with gradient overlay -->
+  <div class="login-background">
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <!-- Main login card -->
+  <div class="login-card">
+    <div class="login-header">
+      <div class="brand-logo">
+        <i class="fas fa-heart brand-icon"></i>
+        <h1 class="brand-name">Lumé</h1>
+      </div>
+      <p class="brand-tagline">Find your perfect match with AI-powered connections</p>
+    </div>
+
+    <div class="login-form-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" autocomplete="off">
+        
+        <!-- Welcome message -->
+        <div class="welcome-section">
+          <h2 class="welcome-title">Welcome Back</h2>
+          <p class="welcome-subtitle">Sign in to continue your journey to meaningful connections</p>
+        </div>
+
+        <!-- Username/Email field -->
+        <div class="form-group">
+          <div class="input-container">
+            <i class="fas fa-user input-icon"></i>
+            <input 
+              type="text" 
+              formControlName="username"
+              class="form-input"
+              placeholder="Username or Email"
+              [class.error]="isFieldInvalid('username')"
+              autocomplete="username">
+            <div class="input-underline"></div>
+          </div>
+          <div class="error-message" *ngIf="isFieldInvalid('username')">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Username is required</span>
+          </div>
+        </div>
+
+        <!-- Password field -->
+        <div class="form-group">
+          <div class="input-container">
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              formControlName="password"
+              class="form-input"
+              placeholder="Password"
+              [class.error]="isFieldInvalid('password')"
+              autocomplete="current-password">
+            <button 
+              type="button" 
+              class="password-toggle"
+              (click)="togglePasswordVisibility()">
+              <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+            <div class="input-underline"></div>
+          </div>
+          <div class="error-message" *ngIf="isFieldInvalid('password')">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Password is required</span>
+          </div>
+        </div>
+
+        <!-- Remember me and forgot password -->
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" formControlName="rememberMe">
+            <span class="checkmark"></span>
+            <span class="label-text">Remember me</span>
+          </label>
+          <a href="#" class="forgot-password" (click)="onForgotPassword($event)">
+            Forgot Password?
+          </a>
+        </div>
+
+        <!-- Login button -->
+        <button 
+          type="submit" 
+          class="login-btn"
+          [disabled]="loginForm.invalid || isLoading"
+          [class.loading]="isLoading">
+          <span *ngIf="!isLoading" class="btn-text">
+            <i class="fas fa-sign-in-alt"></i>
+            Sign In
+          </span>
+          <span *ngIf="isLoading" class="btn-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            Signing In...
+          </span>
+        </button>
+
+        <!-- Social login options -->
+        <div class="social-login">
+          <div class="divider">
+            <span class="divider-text">Or continue with</span>
+          </div>
+          
+          <div class="social-buttons">
+            <button type="button" class="social-btn google-btn" (click)="loginWithGoogle()">
+              <i class="fab fa-google"></i>
+              <span>Google</span>
+            </button>
+            <button type="button" class="social-btn facebook-btn" (click)="loginWithFacebook()">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sign up link -->
+        <div class="signup-link">
+          <p>Don't have an account? 
+            <a routerLink="/register" class="signup-btn">Create Account</a>
+          </p>
+        </div>
+
+        <!-- AI Features highlight -->
+        <div class="ai-features">
+          <div class="feature-item">
+            <i class="fas fa-brain feature-icon"></i>
+            <span>AI-Powered Matching</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-heart feature-icon"></i>
+            <span>Emotion-Aware Chat</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <span>Enhanced Safety</span>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Success/Error messages -->
+  <div class="message-container">
+    <div class="success-message" *ngIf="successMessage" [@slideIn]>
+      <i class="fas fa-check-circle"></i>
+      <span>{{ successMessage }}</span>
+    </div>
+    <div class="error-message-global" *ngIf="errorMessage" [@slideIn]>
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading" [@fadeIn]>
+    <div class="loading-spinner">
+      <div class="heart-spinner">
+        <i class="fas fa-heart"></i>
+      </div>
+      <p>Connecting you to love...</p>
+    </div>
+  </div>
+</div>
